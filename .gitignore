@@ -1,0 +1,13 @@
+# Created by https://www.toptal.com/developers/gitignore/api/direnv
+# Edit at https://www.toptal.com/developers/gitignore?templates=direnv
+
+### devenv ###
+.devenv
+
+### direnv ###
+.direnv
+
+### pre-commit ###
+.pre-commit-config.yaml
+
+# End of https://www.toptal.com/developers/gitignore/api/direnv
