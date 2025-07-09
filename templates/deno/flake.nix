@@ -1,14 +1,10 @@
 {
-  description = "Collection of Nix Flakes templates";
-
   inputs = {
-    devenv.url = "github:cachix/devenv";
-    flake-parts.url = "github:hercules-ci/flake-parts";
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -21,7 +17,6 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         inputs.git-hooks.flakeModule
-        inputs.devenv.flakeModule
         inputs.treefmt-nix.flakeModule
       ];
       systems = import inputs.systems;
@@ -35,32 +30,21 @@
           ...
         }:
         {
-          devenv.shells.default = {
+          devShells.default = pkgs.mkShell {
             packages = with pkgs; [
+              deno
               git
+              nil
             ];
-            containers = lib.mkForce { };
-            languages.nix.enable = true;
-            enterShell = ''
+            shellHook = ''
               ${config.pre-commit.installationScript}
             '';
           };
-
-          pre-commit = import ./nix/pre-commit { inherit config; };
+          pre-commit = import ./nix/pre-commit {
+            inherit config;
+            inherit pkgs;
+          };
           treefmt = import ./nix/treefmt;
         };
-
-      flake = {
-        templates = {
-          deno = {
-            path = ./templates/deno;
-            description = "Deno project template";
-          };
-          rust = {
-            path = ./templates/rust;
-            description = "Rust project template";
-          };
-        };
-      };
     };
 }
