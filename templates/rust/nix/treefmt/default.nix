@@ -1,5 +1,7 @@
 {
   projectRootFile = "flake.nix";
-  programs.rustfmt.enable = true;
-  programs.nixfmt.enable = true;
+  programs = {
+    rustfmt.enable = true;
+    nixfmt.enable = true;
+  };
 }
