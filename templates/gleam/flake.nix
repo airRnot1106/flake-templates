@@ -1,6 +1,4 @@
 {
-  description = "Collection of Nix Flakes templates";
-
   inputs = {
     devenv.url = "github:cachix/devenv";
     git-hooks = {
@@ -8,6 +6,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     systems.url = "github:nix-systems/default";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -36,10 +38,19 @@
         {
           devenv.shells.default = {
             packages = with pkgs; [
+              beam28Packages.rebar3
               git
+              nil
             ];
             containers = lib.mkForce { };
-            languages.nix.enable = true;
+            languages = {
+              erlang = {
+                enable = true;
+              };
+              gleam = {
+                enable = true;
+              };
+            };
             enterShell = ''
               ${config.pre-commit.installationScript}
             '';
@@ -48,22 +59,5 @@
           pre-commit = import ./nix/pre-commit { inherit config; };
           treefmt = import ./nix/treefmt;
         };
-
-      flake = {
-        templates = {
-          deno = {
-            path = ./templates/deno;
-            description = "Deno project template";
-          };
-          gleam = {
-            path = ./templates/gleam;
-            description = "Gleam project template";
-          };
-          rust = {
-            path = ./templates/rust;
-            description = "Rust project template";
-          };
-        };
-      };
     };
 }
