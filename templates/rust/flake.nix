@@ -5,7 +5,7 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
