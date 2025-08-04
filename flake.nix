@@ -60,6 +60,10 @@
             path = ./templates/gleam;
             description = "Gleam project template";
           };
+          nodejs = {
+            path = ./templates/nodejs;
+            description = "Node.js project template";
+          };
           rust = {
             path = ./templates/rust;
             description = "Rust project template";
