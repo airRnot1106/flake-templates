@@ -52,6 +52,10 @@
 
       flake = {
         templates = {
+          bun = {
+            path = ./templates/bun;
+            description = "Bun project template";
+          };
           deno = {
             path = ./templates/deno;
             description = "Deno project template";
